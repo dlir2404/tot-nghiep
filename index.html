@@ -184,6 +184,16 @@
             }
         }
 
+        // Hàm decode Base64 UTF-8
+        function decodeBase64Utf8(str) {
+            try {
+                return decodeURIComponent(escape(atob(str)));
+            } catch (e) {
+                console.error("Decode failed:", e);
+                return "Khách";
+            }
+        }
+
         // Bắt sự kiện click nút xác nhận
         document.addEventListener("DOMContentLoaded", () => {
             const params = new URLSearchParams(window.location.search);
@@ -191,12 +201,7 @@
 
             const encoded = params.get("u");
             if (encoded) {
-                try {
-                    // decode Base64
-                    userName = atob(encoded);
-                } catch (e) {
-                    console.error("Base64 decode failed:", e);
-                }
+                userName = decodeBase64Utf8(encoded);
             }
 
             document.querySelector(".btn").addEventListener("click", (e) => {
